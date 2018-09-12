@@ -33,6 +33,14 @@ def find_all():
         # logging.info(line)
         text_field.insert(tk.INSERT, str(line[1]) + ' ' + str(line[2]) + ' ' + line[3] + ' ' + line[4] + "\n")
 
+def find_telephone_nr():
+    if input_find.get() != '':
+        like = "%{0}%".format(input_find.get())
+        dane = c.execute("""SELECT * FROM book WHERE phone like ? ;""", (like, ))
+        for line in dane:
+            logging.info(line)
+            text_field.insert(tk.INSERT, str(line[1])+' '+str(line[2])+' '+line[3]+' '+line[4]+"\n")
+
 
 def clear():
         text_field.delete('1.0', tk.END)
@@ -87,14 +95,17 @@ buttons.grid(row=3, column=3, sticky=tk.N)
 # buttons are pinned up to "buttons"
 button_find = tk.Button(buttons, text='Wyszukaj', background=bg_colour, command=find)
 button_find.grid(row=3, column=3, sticky=tk.N)
-button_show = tk.Button(buttons, text='Wyświetl wszystko', background=bg_colour, command=find_all)
+button_show = tk.Button(buttons, text='Szukaj po numerze telefonu', background=bg_colour, command=find_telephone_nr)
 button_show.grid(row=3, column=4, sticky=tk.N)
 button_clear = tk.Button(buttons, text='Wyczyść', background=bg_colour, command=clear)
 button_clear.grid(row=3, column=5, sticky=tk.N)
 
+button_show_all = tk.Button(root, text='Wyświetl wszystko', background=bg_colour, command=find_all)
+button_show_all.grid(row=5, column=3, sticky=tk.N)
+
 #text filed
 text_field = tk.Text(root)
-text_field.grid(row=5, column=3, sticky=tk.N)
+text_field.grid(row=6, column=3, sticky=tk.N)
 text_field.config(width=50, background=inputs_colour)
 
 
