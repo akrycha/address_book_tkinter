@@ -19,6 +19,7 @@ def insert_database():
 
 
 def find():
+    text_field.delete('1.0', tk.END)
     if input_find.get()!='':
         like ="%{0}%".format(input_find.get())
         dane = c.execute("""SELECT * FROM book WHERE name like ? OR lastname like ? OR address like ?; """, (like, like, like,))
@@ -29,11 +30,13 @@ def find():
 
 def find_all():
     dane = c.execute("""SELECT * FROM book""")
+    text_field.delete('1.0', tk.END)
     for line in dane:
         # logging.info(line)
         text_field.insert(tk.INSERT, str(line[1]) + ' ' + str(line[2]) + ' ' + line[3] + ' ' + line[4] + "\n")
 
 def find_telephone_nr():
+    text_field.delete('1.0', tk.END)
     if input_find.get() != '':
         like = "%{0}%".format(input_find.get())
         dane = c.execute("""SELECT * FROM book WHERE phone like ? ;""", (like, ))
